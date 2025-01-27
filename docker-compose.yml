@@ -4,7 +4,14 @@ services:
     build: vulnerableidp
     ports:
       - "80:80"
+    environment:
+      - SP_HOST=http://localhost:8000
+      - IDP_HOST=http://localhost:80
+
   sp:
     build: vulnerablesp
     ports:
       - "8000:8000"
+    environment:
+      - SP_HOST=http://localhost:8000
+      - IDP_HOST=http://localhost:80
