@@ -6,7 +6,7 @@ if [ -z "$SP_HOST" ]; then
   exit 1
 fi
 
-find /vulnerableSP -type f -exec sed -i "s/127.0.0.1:8000/$SP_HOST/g" {} \;
+find /vulnerableSP -type f -exec sed -i "s/127.0.0.1:8000/$SP_HOST/g" {} +
 
 # Start the application
 exec "$@"
