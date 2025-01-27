@@ -5,13 +5,13 @@ services:
     ports:
       - "80:80"
     environment:
-      - SP_HOST=http://localhost:8000
-      - IDP_HOST=http://localhost:80
+      - SP_HOST=localhost:8000
+      - IDP_HOST=localhost
 
   sp:
     build: vulnerablesp
     ports:
       - "8000:8000"
     environment:
-      - SP_HOST=http://localhost:8000
-      - IDP_HOST=http://localhost:80
+      - SP_HOST=localhost:8000
+      - IDP_HOST=localhost
