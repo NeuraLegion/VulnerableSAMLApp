@@ -24,5 +24,8 @@ ADD loginuserpass.php /usr/share/simplesamlphp/modules/core/templates/
 ADD welcome.png /usr/share/simplesamlphp/www/resources/
 EXPOSE 80
 
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Start the web service
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["/bin/bash", "/start.sh"]

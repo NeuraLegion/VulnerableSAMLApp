@@ -11,10 +11,9 @@ WORKDIR /vulnerableSP
 RUN pip install uwsgi
 RUN pip install -r requirements.txt
 
-RUN python /vulnerableSP/setup.py install
-
 EXPOSE 8000
 
-WORKDIR /vulnerableSP/yogiSP
-#CMD ["python", "index.py"]
-CMD ["uwsgi", "--ini", "vulnsp.ini"]
+COPY start.sh /vulnerableSP/start.sh
+RUN chmod +x /vulnerableSP/start.sh
+
+CMD ["/bin/bash", "/vulnerableSP/start.sh"]
