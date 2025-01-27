@@ -16,7 +16,10 @@ RUN python /vulnerableSP/setup.py install
 EXPOSE 8000
 
 WORKDIR /vulnerableSP/yogiSP
-#CMD ["python", "index.py"]
+COPY start.sh /vulnerableidp/start.sh
+RUN chmod +x /vulnerableidp/start.sh
+
+CMD ["/vulnerableidp/start.sh", "apache2ctl", "-D", "FOREGROUND"]
 COPY start.sh /vulnerableSP/start.sh
 RUN chmod +x /vulnerableSP/start.sh
 
