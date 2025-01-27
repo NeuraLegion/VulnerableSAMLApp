@@ -19,7 +19,10 @@ WORKDIR /vulnerableSP/yogiSP
 COPY start.sh /vulnerableidp/start.sh
 RUN chmod +x /vulnerableidp/start.sh
 
-CMD ["/vulnerableidp/start.sh", "apache2ctl", "-D", "FOREGROUND"]
+COPY start.sh /vulnerablesp/start.sh
+RUN chmod +x /vulnerablesp/start.sh
+
+CMD ["/vulnerablesp/start.sh", "uwsgi", "--ini", "vulnsp.ini"]
 COPY start.sh /vulnerableSP/start.sh
 RUN chmod +x /vulnerableSP/start.sh
 
