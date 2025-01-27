@@ -15,3 +15,22 @@ services:
     environment:
       - SP_HOST=localhost:8000
       - IDP_HOST=localhost
+
+# services:
+#   idp:
+#     build: vulnerableidp
+#     ports:
+#       - "80:80"
+#     environment:
+#       - SP_HOST=test.alexkutsan.xyz
+#       - IDP_HOST=exposed.alexkutsan.xyz
+#       - USE_HTTPS=1
+
+#   sp:
+#     build: vulnerablesp
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - SP_HOST=test.alexkutsan.xyz
+#       - IDP_HOST=exposed.alexkutsan.xyz
+#       - USE_HTTPS=1

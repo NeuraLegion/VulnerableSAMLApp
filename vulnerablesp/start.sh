@@ -11,10 +11,13 @@ if [ -n "$IDP_HOST" ]; then
   find /vulnerableSP -type f -exec sed -i "s/127.0.0.1/$IDP_HOST/g" {} +
 fi
 
-
-# # Replace all occurrences of :8000 with an empty string
-# echo "Removing all occurrences of :8000"
-# find /vulnerableSP -type f -exec sed -i "s|:8000||g" {} +
+if [ -n "$USE_HTTPS" ]; then
+  echo "Replacing http://$SP_HOST with https://$SP_HOST"
+  find /vulnerableSP -type f -exec sed -i "s|http://$SP_HOST|https://$SP_HOST|g" {} +
+  
+  echo "Replacing http://$IDP_HOST with https://$IDP_HOST"
+  find /vulnerableSP -type f -exec sed -i "s|http://$IDP_HOST|https://$IDP_HOST|g" {} +
+fi
 
 
 cd /vulnerableSP/
