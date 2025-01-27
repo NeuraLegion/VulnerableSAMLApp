@@ -11,5 +11,13 @@ if [ -n "$IDP_HOST" ]; then
   find /vulnerableSP -type f -exec sed -i "s/127.0.0.1/$IDP_HOST/g" {} +
 fi
 
+
+# # Replace all occurrences of :8000 with an empty string
+# echo "Removing all occurrences of :8000"
+# find /vulnerableSP -type f -exec sed -i "s|:8000||g" {} +
+
+
+cd /vulnerableSP/
 python /vulnerableSP/setup.py install
+cd /vulnerableSP/yogiSP
 uwsgi --ini vulnsp.ini
