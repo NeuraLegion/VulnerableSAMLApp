@@ -10,4 +10,6 @@ fi
 if [ -n "$IDP_HOST" ]; then
   find /vulnerableSP -type f -exec sed -i "s/127.0.0.1/$IDP_HOST/g" {} +
 fi
-exec "$@"
+
+python /vulnerableSP/setup.py install
+uwsgi --ini vulnsp.ini
