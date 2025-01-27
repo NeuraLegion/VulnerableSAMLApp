@@ -22,8 +22,8 @@ services:
 #     ports:
 #       - "80:80"
 #     environment:
-#       - SP_HOST=test.alexkutsan.xyz
-#       - IDP_HOST=exposed.alexkutsan.xyz
+#       - SP_HOST=sp.domain.com
+#       - IDP_HOST=idp.domain.com
 #       - USE_HTTPS=1
 
 #   sp:
@@ -31,6 +31,6 @@ services:
 #     ports:
 #       - "8000:8000"
 #     environment:
-#       - SP_HOST=test.alexkutsan.xyz
-#       - IDP_HOST=exposed.alexkutsan.xyz
+#       - SP_HOST=sp.domain.com
+#       - IDP_HOST=idp.domain.com
 #       - USE_HTTPS=1
