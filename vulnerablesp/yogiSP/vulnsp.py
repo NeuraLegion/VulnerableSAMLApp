@@ -120,7 +120,7 @@ def profile():
         if len(session['samlUserdata']) > 0:
             attributes = session['samlUserdata'].items()
     else:
-        return redirect('/')
+        return render_template('401.html'), 401
     return render_template('profile.html', paint_logout=paint_logout,
                            attributes=attributes)
 
