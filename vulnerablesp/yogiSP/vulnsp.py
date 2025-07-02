@@ -60,10 +60,12 @@ def index():
     attributes = False
     paint_logout = False
 
+    import os
+    
     # Define valid roles
     VALID_ROLES = {
         'users': 'Regular User',
-        'superadmin': 'Administrator',
+        os.getenv('ADMIN_ROLE', 'superadmins'): 'Administrator',
         'PlatformConfiguration': 'Platform Configurator'
     }
 

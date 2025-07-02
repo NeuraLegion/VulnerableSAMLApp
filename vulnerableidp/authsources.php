@@ -106,14 +106,14 @@ $config = array(
             'username' => array('yogi'),
         ),
         'admin:this-is-the-administrator-pasword-oh-no-is-that-a-typo-in-password' => array(
-            'memberOf' => array('superadmins'),
+            'memberOf' => array(getenv('ADMIN_ROLE') ?: 'superadmins'),
             'emailAddress' => array('admin@jellystonep.com'),
             'firstName' => array('Ranger'),
             'lastName' => array('Smith'),
             'username' => array('admin'),
         ),
         'rsmith:password' => array(
-            'memberOf' => array('superadmins'),
+            'memberOf' => array(getenv('ADMIN_ROLE') ?: 'superadmins'),
             'emailAddress' => array('rsmith@jellystonep.com'),
             'firstName' => array('Ranger'),
             'lastName' => array('Smith'),

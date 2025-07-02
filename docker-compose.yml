@@ -7,6 +7,7 @@ services:
     environment:
       - SP_HOST=localhost:8000
       - IDP_HOST=localhost
+      - ADMIN_ROLE=admins
 
   sp:
     build: vulnerablesp
@@ -15,6 +16,7 @@ services:
     environment:
       - SP_HOST=localhost:8000
       - IDP_HOST=localhost
+      - ADMIN_ROLE=admins
 
 # services:
 #   idp:
