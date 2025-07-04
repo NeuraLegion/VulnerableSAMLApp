@@ -84,40 +84,52 @@ def index():
 
         return redirect(auth.logout(name_id=name_id, session_index=session_index))
     elif 'acs' in request.args:
-        auth.process_response()
-        errors = auth.get_errors()
-        not_auth_warn = not auth.is_authenticated()
-        if len(errors) == 0:
-            # Get user attributes
-            attributes = auth.get_attributes()
+        try:
+            # Process SAML response
+            auth.process_response()
+            errors = auth.get_errors()
+            not_auth_warn = not auth.is_authenticated()
             
-            # Verify memberOf attribute
-            member_of = attributes.get('memberOf', [])
-            valid_roles = []
-            
-            # Only keep roles that are in our whitelist
-            for role in member_of:
-                if role in VALID_ROLES:
-                    valid_roles.append(role)
-            
-            # If no valid roles, use default 'users'
-            if not valid_roles:
-                valid_roles = ['users']
-            
-            # Store only the verified roles
-            attributes['memberOf'] = valid_roles
-            
-            # Log if suspicious roles were attempted
-            if set(member_of) - set(valid_roles):
-                app.logger.warning("User {} attempted to use invalid roles: {}".format(auth.get_nameid(), set(member_of) - set(valid_roles)))
-            
-            session['samlUserdata'] = attributes
-            session['samlNameId'] = auth.get_nameid()
-            session['samlSessionIndex'] = auth.get_session_index()
+            # Check if SAML response exists
+            if request.form.get('SAMLResponse'):
+                # Get user attributes
+                attributes = auth.get_attributes()
+                
+                # Verify memberOf attribute
+                member_of = attributes.get('memberOf', [])
+                valid_roles = []
+                
+                # Only keep roles that are in our whitelist
+                for role in member_of:
+                    if role in VALID_ROLES:
+                        valid_roles.append(role)
+                
+                # If no valid roles, use default 'users'
+                if not valid_roles:
+                    valid_roles = ['users']
+                
+                # Store only the verified roles
+                attributes['memberOf'] = valid_roles
+                
+                # Log if suspicious roles were attempted
+                if set(member_of) - set(valid_roles):
+                    app.logger.warning("User {} attempted to use invalid roles: {}".format(auth.get_nameid(), set(member_of) - set(valid_roles)))
+                
+                session['samlUserdata'] = attributes
+                session['samlNameId'] = auth.get_nameid()
+                session['samlSessionIndex'] = auth.get_session_index()
+            else:
+                app.logger.warning("SAMLResponse parameter is missing")
             
             self_url = OneLogin_Saml2_Utils.get_self_url(req)
             if 'RelayState' in request.form and self_url != request.form['RelayState']:
                 return redirect(auth.redirect_to(request.form['RelayState']))
+            
+        except Exception as e:
+            app.logger.error("Error processing SAML response: %s" % str(e))
+            if 'RelayState' in request.form:
+                return redirect(auth.redirect_to(request.form['RelayState']))
+            return "Error processing SAML response", 500
     elif 'sls' in request.args:
         dscb = lambda: session.clear()
         url = auth.process_slo(delete_session_cb=dscb)
